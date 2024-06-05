@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors'); // Import cors
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -7,6 +8,7 @@ require('dotenv').config();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cors()); // Enable CORS for all routes
 
 // Your API key from environment variables
 const API_KEY = process.env.API_KEY;
