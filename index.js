@@ -2,8 +2,24 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Load environment variables from .env file
+require('dotenv').config();
+
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+// Your API key from environment variables
+const API_KEY = process.env.API_KEY;
+
+// Middleware to check API key
+app.use((req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
+  if (apiKey && apiKey === API_KEY) {
+    next();
+  } else {
+    res.status(403).json({ error: 'Forbidden' });
+  }
+});
 
 // Default relay status
 let relayStatus = {
